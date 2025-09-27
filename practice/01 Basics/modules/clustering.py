@@ -66,7 +66,20 @@ class TimeSeriesHierarchicalClustering:
         self: the fitted model
         """
 
-       # INSERT YOUR CODE
+        # INSERT YOUR CODE
+        # Создаем модель AgglomerativeClustering
+        self.model = AgglomerativeClustering(
+            n_clusters=self.n_clusters,
+            metric='precomputed',  # используем предвычисленную матрицу расстояний
+            linkage=self.method,
+            compute_distances=True  # включаем вычисление расстояний
+        )
+
+        # Обучаем модель на матрице расстояний
+        self.labels_ = self.model.fit_predict(distance_matrix)
+
+        # Создаем linkage matrix для дендрограммы
+        self.linkage_matrix = self._create_linkage_matrix()
 
         return self
 

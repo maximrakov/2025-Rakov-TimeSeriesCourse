@@ -50,6 +50,15 @@ class PairwiseDistance:
         dist_func = None
 
         # INSERT YOUR CODE
+        if self.metric == 'euclidean':
+            if self.is_normalize:
+                dist_func = norm_ED_distance
+            else:
+                dist_func = ED_distance
+        elif self.metric == 'dtw':
+            dist_func = DTW_distance
+        else:
+            raise ValueError(f"Unknown metric: {self.metric}. Available options: 'euclidean', 'dtw'")
 
         return dist_func
 
@@ -70,5 +79,27 @@ class PairwiseDistance:
         matrix_values = np.zeros(shape=matrix_shape)
         
         # INSERT YOUR CODE
+
+        dist_func = self._choose_distance()
+
+        # Нормализуем данные если требуется
+        if self.is_normalize and self.metric != 'euclidean':
+            # Для неевклидовых метрик нормализуем вручную
+            normalized_data = np.array([z_normalize(ts) for ts in input_data])
+        else:
+            normalized_data = input_data
+
+        # Вычисляем попарные расстояния (только верхний треугольник)
+        n = len(normalized_data)
+        for i in range(n):
+            for j in range(i + 1, n):  # Только верхний треугольник
+                if self.metric == 'dtw':
+                    # Для DTW передаем параметр r
+                    distance = dist_func(normalized_data[i], normalized_data[j], r=1.0)
+                else:
+                    distance = dist_func(normalized_data[i], normalized_data[j])
+
+                matrix_values[i, j] = distance
+                matrix_values[j, i] = distance  # Симметрично заполняем нижний треугольник
 
         return matrix_values

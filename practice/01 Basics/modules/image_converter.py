@@ -3,8 +3,6 @@ import pandas as pd
 import math
 import cv2
 import imutils
-from google.colab.patches import cv2_imshow
-
 
 class Image2TimeSeries:
     """
@@ -164,7 +162,7 @@ class Image2TimeSeries:
         for i in range(len(edge_coordinates)):
             cv2.drawContours(img, np.array([[center, edge_coordinates[i]]]), -1, (255, 0, 255), 4)
 
-        cv2_imshow(imutils.resize(img, width=200))
+        cv2.imshow(imutils.resize(img, width=200))
 
 
     def convert(self, img: np.ndarray, is_visualize: bool = False) -> np.ndarray:
