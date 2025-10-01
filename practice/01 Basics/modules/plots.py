@@ -46,8 +46,8 @@ def plot_ts(ts_set: np.ndarray, plot_title: str = 'Input Time Series Set'):
 
     fig.update_layout(title={'text': plot_title, 'x': 0.5, 'y':0.9, 'xanchor': 'center', 'yanchor': 'top'},
                       title_font=dict(size=18, color='black'),
-                      plot_bgcolor="rgba(0,0,0,0)",
-                      paper_bgcolor='rgba(0,0,0,0)',
+                      plot_bgcolor="white",
+                      paper_bgcolor='white',
                       legend=dict(font=dict(size=16, color='black')),
                       width=1000,
                       height=400
