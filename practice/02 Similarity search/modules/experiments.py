@@ -147,7 +147,7 @@ def run_experiment(algorithm: str, task: str, data: dict, exp_params: dict, alg_
 def visualize_plot_times(times: np.ndarray, comparison_param: np.ndarray, exp_params: dict) -> None:
     """
     Visualize plot with execution times
-    
+
     Parameters
     ----------
     times: execution times of algorithms
@@ -156,17 +156,17 @@ def visualize_plot_times(times: np.ndarray, comparison_param: np.ndarray, exp_pa
     """
 
     if ('n' in exp_params['varying'].keys()):
-        varying_param_name = 'Time series length'   
+        varying_param_name = 'Time series length'
         varying_param_value = exp_params['varying']['n']
     else:
         varying_param_name = 'Query length'
         varying_param_value = exp_params['varying']['m']
 
-    plot_title = 'Runtime depending on ' + varying_param_name 
+    plot_title = 'Runtime depending on ' + varying_param_name
     trace_titles = comparison_param
     x_axis_title = varying_param_name
     y_axis_title = 'Runtime, s'
-    
+
     mplot2d(np.array(varying_param_value), times, plot_title, x_axis_title, y_axis_title, trace_titles)
 
 

@@ -17,7 +17,7 @@ def read_ts(file_path: str) -> np.ndarray:
     ts: time series data
     """
 
-    ts = pd.read_csv(file_path, header=None, delim_whitespace=True)
+    ts = pd.read_csv(file_path, header=None, sep="\s+")
     
     return ts.to_numpy()
 
@@ -88,10 +88,8 @@ def random_walk(n: int) -> np.ndarray:
     directions = ["UP", "DOWN"]
 
     for i in range(1, n):
-        # Randomly select either UP or DOWN
         step = random.choice(directions)
 
-        # Move the object up or down
         if step == "UP":
             value += 1
         elif step == "DOWN":

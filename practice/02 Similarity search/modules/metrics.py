@@ -17,7 +17,10 @@ def ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
     
     ed_dist = 0
 
-    # INSERT YOUR CODE
+    if len(ts1) != len(ts2):
+        raise ValueError("Временные ряды должны быть одинаковой длины")
+
+    ed_dist = np.sqrt(np.sum((ts1 - ts2) ** 2))
 
     return ed_dist
 
@@ -38,7 +41,13 @@ def norm_ED_distance(ts1: np.ndarray, ts2: np.ndarray) -> float:
 
     norm_ed_dist = 0
 
-    # INSERT YOUR CODE
+    if len(ts1) != len(ts2):
+        raise ValueError("Временные ряды должны быть одинаковой длины")
+
+    ts1_norm = z_normalize(ts1)
+    ts2_norm = z_normalize(ts2)
+
+    norm_ed_dist = ED_distance(ts1_norm, ts2_norm)
 
     return norm_ed_dist
 
@@ -60,6 +69,28 @@ def DTW_distance(ts1: np.ndarray, ts2: np.ndarray, r: float = 1) -> float:
 
     dtw_dist = 0
 
-    # INSERT YOUR CODE
+
+    n = len(ts1)
+    m = len(ts2)
+
+    window_size = max(1, int(max(n, m) * r))
+
+    dtw_matrix = np.full((n + 1, m + 1), np.inf)
+    dtw_matrix[0, 0] = 0
+
+    for i in range(1, n + 1):
+        j_start = max(1, i - window_size)
+        j_end = min(m + 1, i + window_size + 1)
+
+        for j in range(j_start, j_end):
+            cost = (ts1[i - 1] - ts2[j - 1]) ** 2
+
+            min_prev = min(dtw_matrix[i - 1, j],
+                           dtw_matrix[i, j - 1],
+                           dtw_matrix[i - 1, j - 1])
+
+            dtw_matrix[i, j] = cost + min_prev
+
+    dtw_dist = dtw_matrix[n, m]
 
     return dtw_dist
