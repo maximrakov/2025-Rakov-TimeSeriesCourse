@@ -1,5 +1,6 @@
 import numpy as np
 import math
+from typing import Optional
 
 from modules.bestmatch import UCR_DTW, topK_match
 import mass_ts as mts
@@ -24,7 +25,7 @@ class BestMatchPredictor:
     Predictor based on best match algorithm
     """
 
-    def __init__(self, h: int = 1, match_alg: str = 'UCR-DTW', match_alg_params: dict | None = None, aggr_func: str = 'average') -> None:
+    def __init__(self, h: int = 1, match_alg: str = 'UCR-DTW', match_alg_params: Optional[dict] = None, aggr_func: str = 'average') -> None:
         """ 
         Constructor of class BestMatchPredictor
 
@@ -38,7 +39,7 @@ class BestMatchPredictor:
 
         self.h: int = h
         self.match_alg: str = match_alg
-        self.match_alg_params: dict | None = default_match_alg_params[match_alg].copy()
+        self.match_alg_params: Optional[dict] = default_match_alg_params[match_alg].copy()
         if match_alg_params is not None:
             self.match_alg_params.update(match_alg_params)
         self.agg_func: str = aggr_func
@@ -57,13 +58,12 @@ class BestMatchPredictor:
         predict_values: prediction values
         """
 
-        match self.agg_func:
-            case 'average':
-                predict_values = topK_subs_predict_values.mean(axis=0).round()
-            case 'median':
-                predict_values = topK_subs_predict_values.median(axis=0).round()
-            case _:
-                raise NotImplementedError
+        if self.agg_func == 'average':
+            predict_values = topK_subs_predict_values.mean(axis=0).round()
+        elif self.agg_func == 'median':
+            predict_values = np.median(topK_subs_predict_values, axis=0).round()
+        else:
+            raise NotImplementedError
         
         return predict_values
 

@@ -51,7 +51,7 @@ def plot_ts_set(ts_set: np.ndarray, title: str = 'Input Time Series Set') -> Non
                       legend=dict(font=dict(size=20, color='black'))
                       )
 
-    fig.show(renderer="colab")
+    fig.show(renderer="notebook")
 
 
 def mplot2d(x: np.ndarray, y: np.ndarray, plot_title: str = None, x_title: str = None, y_title: str = None, trace_titles: np.ndarray = None) -> None:
@@ -100,7 +100,7 @@ def mplot2d(x: np.ndarray, y: np.ndarray, plot_title: str = None, x_title: str =
                       height=600
                       )
 
-    fig.show(renderer="colab")
+    fig.show(renderer="notebook")
 
 
 def plot_bestmatch_data(ts: np.ndarray, query: np.ndarray) -> None:
@@ -146,7 +146,7 @@ def plot_bestmatch_data(ts: np.ndarray, query: np.ndarray) -> None:
                       showlegend=False,
                       title_x=0.5)
 
-    fig.show(renderer="colab")
+    fig.show(renderer="notebook")
 
 
 def plot_bestmatch_results(ts: np.ndarray, query: np.ndarray, bestmatch_results: dict) -> None:
@@ -203,7 +203,7 @@ def plot_bestmatch_results(ts: np.ndarray, query: np.ndarray, bestmatch_results:
                       showlegend=False,
                       title_x=0.5)
 
-    fig.show(renderer="colab")
+    fig.show(renderer="notebook")
 
 
 def pie_chart(labels: np.ndarray, values: np.ndarray, plot_title='Pie chart') -> None:
@@ -226,4 +226,4 @@ def pie_chart(labels: np.ndarray, values: np.ndarray, plot_title='Pie chart') ->
                       height=500
                       )
 
-    fig.show(renderer="colab")
+    fig.show(renderer="notebook")

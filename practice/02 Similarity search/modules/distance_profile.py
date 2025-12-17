@@ -25,14 +25,19 @@ def brute_force(ts: np.ndarray, query: np.ndarray, is_normalize: bool = True) ->
 
     dist_profile = np.zeros(shape=(N,))
 
+    # INSERT YOUR CODE
     for i in range(N):
+        # Берем подпоследовательность временного ряда
         subsequence = ts[i:i + m]
 
         if is_normalize:
+            # Нормализуем и запрос, и подпоследовательность
             query_norm = z_normalize(query)
             subsequence_norm = z_normalize(subsequence)
+            # Вычисляем расстояние между нормализованными рядами
             dist_profile[i] = ED_distance(query_norm, subsequence_norm)
         else:
+            # Вычисляем расстояние без нормализации
             dist_profile[i] = ED_distance(query, subsequence)
 
     return dist_profile

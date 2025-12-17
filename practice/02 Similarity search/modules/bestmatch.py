@@ -156,6 +156,27 @@ class NaiveBestMatchFinder(BestMatchFinder):
         
         # INSERT YOUR CODE
 
+        # Вычисляем профиль расстояний DTW для всех подпоследовательностей
+        for i in range(N):
+            subsequence = ts_data[i]
+
+            if self.is_normalize:
+                # Нормализуем подпоследовательность и запрос
+                query_norm = z_normalize(query)
+                subsequence_norm = z_normalize(subsequence)
+                distance = DTW_distance(query_norm, subsequence_norm, r=self.r)
+            else:
+                distance = DTW_distance(query, subsequence, r=self.r)
+
+            dist_profile[i] = distance
+
+        # Находим topK лучших совпадений с исключающей зоной
+        temp_results = topK_match(dist_profile, excl_zone, topK=self.topK)
+
+        # Преобразуем результаты в нужный формат
+        bestmatch['indices'] = temp_results['indices']
+        bestmatch['distance'] = temp_results['distances']
+
         return bestmatch
 
 

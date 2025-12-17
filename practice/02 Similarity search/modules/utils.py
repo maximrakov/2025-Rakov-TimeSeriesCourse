@@ -88,8 +88,10 @@ def random_walk(n: int) -> np.ndarray:
     directions = ["UP", "DOWN"]
 
     for i in range(1, n):
+        # Randomly select either UP or DOWN
         step = random.choice(directions)
 
+        # Move the object up or down
         if step == "UP":
             value += 1
         elif step == "DOWN":

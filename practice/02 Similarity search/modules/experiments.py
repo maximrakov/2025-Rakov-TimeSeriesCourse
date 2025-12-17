@@ -167,7 +167,41 @@ def visualize_plot_times(times: np.ndarray, comparison_param: np.ndarray, exp_pa
     x_axis_title = varying_param_name
     y_axis_title = 'Runtime, s'
 
-    mplot2d(np.array(varying_param_value), times, plot_title, x_axis_title, y_axis_title, trace_titles)
+    # Временно изменяем mplot2d для белого фона
+    import plotly.graph_objects as go
+    from plotly.offline import init_notebook_mode
+    import plotly.io as pio
+
+    # Создаем график напрямую с белым фоном
+    fig = go.Figure()
+
+    for i in range(len(comparison_param)):
+        fig.add_trace(go.Scatter(x=np.array(varying_param_value), y=times[i],
+                                 line=dict(width=3), name=str(trace_titles[i])))
+
+    fig.update_xaxes(showgrid=True, gridcolor='lightgray',
+                     title=x_axis_title,
+                     title_font=dict(size=18, color='black'),
+                     linecolor='#000',
+                     ticks='outside',
+                     tickfont=dict(size=14, color='black'))
+
+    fig.update_yaxes(showgrid=True, gridcolor='lightgray',
+                     title=y_axis_title,
+                     title_font=dict(size=18, color='black'),
+                     linecolor='#000',
+                     ticks='outside',
+                     tickfont=dict(size=14, color='black'))
+
+    fig.update_layout(title={'text': plot_title, 'x': 0.5, 'xanchor': 'center'},
+                      title_font=dict(size=20, color='black'),
+                      plot_bgcolor='white',  # Белый фон графика
+                      paper_bgcolor='white',  # Белый фон области
+                      legend=dict(font=dict(size=14, color='black')),
+                      width=800,
+                      height=500)
+
+    fig.show()
 
 
 def calculate_speedup(base_algorithm_times: np.ndarray, improved_algorithms_times: np.ndarray) -> np.ndarray:
