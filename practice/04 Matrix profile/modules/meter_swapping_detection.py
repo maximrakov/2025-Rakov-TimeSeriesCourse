@@ -11,7 +11,7 @@ plotly.offline.init_notebook_mode(connected=True)
 from modules.mp import *
 
 
-def heads_tails(consumptions: dict, cutoff, house_idx: list) -> dict, dict:
+def heads_tails(consumptions: dict, cutoff, house_idx: list) -> tuple[dict, dict]:
     """
     Split time series into two parts: Head and Tail
 

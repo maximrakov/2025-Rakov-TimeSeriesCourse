@@ -24,6 +24,21 @@ def compute_mp(ts1: np.ndarray, m: int, exclusion_zone: int = None, ts2: np.ndar
     """
     
     # INSERT YOUR CODE
+    ts1 = ts1.astype(np.float64)
+    if ts2 is not None:
+        ts2 = ts2.astype(np.float64)
+
+    # Выбор метода вычисления матричного профиля:
+    # - если указан второй ряд ts2 → вычисляется кросс-профиль (AB-join)
+    # - иначе → само-профиль (self-join)
+    if ts2 is not None:
+        mp = stumpy.stump(T_A=ts1, m=m, T_B=ts2, ignore_trivial=False)
+    else:
+        mp = stumpy.stump(T_A=ts1, m=m, ignore_trivial=True)
+
+    # Если зона исключения не указана, задаём стандартную
+    if exclusion_zone is None:
+        exclusion_zone = int(np.ceil(m / 2))
 
     return {'mp': mp[:, 0],
             'mpi': mp[:, 1],
