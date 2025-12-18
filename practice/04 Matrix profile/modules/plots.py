@@ -52,7 +52,7 @@ def plot_ts(ts: np.ndarray, title: str = 'Input Time Series') -> None:
                       legend=dict(font=dict(size=20, color='black'))
                       )
 
-    fig.show(renderer="colab")
+    fig.show()
 
 
 
@@ -133,7 +133,7 @@ def plot_motifs(mp: dict, top_k_motifs: dict) -> None:
                       paper_bgcolor='white',
                       height=1300)
 
-    fig.show(renderer="colab")
+    fig.show()
 
 
 def plot_discords(mp: dict, top_k_discords: dict) -> None:
@@ -190,7 +190,7 @@ def plot_discords(mp: dict, top_k_discords: dict) -> None:
                       plot_bgcolor="white",
                       paper_bgcolor='white')
 
-    fig.show(renderer="colab")
+    fig.show()
 
 
 def plot_segmentation(mp: dict, threshold: float) -> None:
@@ -236,4 +236,4 @@ def plot_segmentation(mp: dict, threshold: float) -> None:
                       plot_bgcolor="white",
                       paper_bgcolor='white', height=700)
 
-    fig.show(renderer="colab")
+    fig.show()
